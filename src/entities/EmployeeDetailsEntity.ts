@@ -1,23 +1,31 @@
-import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToOne,ManyToOne, JoinColumn} from 'typeorm';
+import { Employee } from './EmployeeEntity';
+import {Location} from './LocationEntity';
 
 @Entity()
 export class EmployeeDetails {
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
+
+    @Column({default:0})
+    experience: number;
+
+    @Column({type: "decimal",  precision:12, scale:2, default: 0})
+    salary: number;
+
+    @Column({nullable: true})
+    created_at: Date;
+
+    @Column({nullable: true})
+    last_updated: Date;
 
     @Column()
-    experience: number
+    phno: string;
 
-    @Column({type: "decimal",  precision:2})
-    salary: number
+    @OneToOne(() => Employee, {cascade: true, eager: true, onDelete: 'CASCADE'})
+    @JoinColumn()
+    employee: Employee;
 
-    @Column({type: 'timestamp'})
-    created_at: string
-
-    @Column({type: 'timestamp'})
-    last_updated: string
-
-    @Column({
-    })
-    phnoOne: number
+    @ManyToOne(() => Location, (location) => location.employeeDetails, {eager: true, onDelete: 'CASCADE'})
+    location: Location;
 }

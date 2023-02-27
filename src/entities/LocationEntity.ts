@@ -1,13 +1,17 @@
-import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
+import { EmployeeDetails } from './EmployeeDetailsEntity';
 
 @Entity()
 export class Location {
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
 
     @Column()
-    name: string
+    name: string;
 
     @Column()
-    country: string
+    country: string;
+
+    @OneToMany(() => EmployeeDetails, (employeeDetails) => employeeDetails.location, {onDelete: 'CASCADE'})
+    employeeDetails: EmployeeDetails[];
 }

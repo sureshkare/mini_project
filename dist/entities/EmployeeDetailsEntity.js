@@ -11,6 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmployeeDetails = void 0;
 const typeorm_1 = require("typeorm");
+const EmployeeEntity_1 = require("./EmployeeEntity");
+const LocationEntity_1 = require("./LocationEntity");
 let EmployeeDetails = class EmployeeDetails {
 };
 __decorate([
@@ -18,27 +20,34 @@ __decorate([
     __metadata("design:type", Number)
 ], EmployeeDetails.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ default: 0 }),
     __metadata("design:type", Number)
 ], EmployeeDetails.prototype, "experience", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "decimal", length: 12, precision: 2 }),
+    (0, typeorm_1.Column)({ type: "decimal", precision: 12, scale: 2, default: 0 }),
     __metadata("design:type", Number)
 ], EmployeeDetails.prototype, "salary", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'datetime2', length: 7 }),
-    __metadata("design:type", String)
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Date)
 ], EmployeeDetails.prototype, "created_at", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'datetime2', length: 7 }),
-    __metadata("design:type", String)
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Date)
 ], EmployeeDetails.prototype, "last_updated", void 0);
 __decorate([
-    (0, typeorm_1.Column)({
-        length: 10
-    }),
-    __metadata("design:type", Number)
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
 ], EmployeeDetails.prototype, "phno", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => EmployeeEntity_1.Employee, { cascade: true, eager: true, onDelete: 'CASCADE' }),
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", EmployeeEntity_1.Employee)
+], EmployeeDetails.prototype, "employee", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => LocationEntity_1.Location, (location) => location.employeeDetails, { eager: true, onDelete: 'CASCADE' }),
+    __metadata("design:type", LocationEntity_1.Location)
+], EmployeeDetails.prototype, "location", void 0);
 EmployeeDetails = __decorate([
     (0, typeorm_1.Entity)()
 ], EmployeeDetails);

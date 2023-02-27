@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Project = void 0;
 const typeorm_1 = require("typeorm");
+const EmployeeEntity_1 = require("./EmployeeEntity");
 let Project = class Project {
 };
 __decorate([
@@ -21,6 +22,11 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Project.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.ManyToMany)(() => EmployeeEntity_1.Employee, { cascade: true, eager: true, onDelete: 'CASCADE' }),
+    (0, typeorm_1.JoinTable)(),
+    __metadata("design:type", Array)
+], Project.prototype, "employee", void 0);
 Project = __decorate([
     (0, typeorm_1.Entity)()
 ], Project);

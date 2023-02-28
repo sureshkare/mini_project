@@ -12,27 +12,29 @@ projectRouter.use(express.urlencoded({ extended: true }));
 
 //Create a project
 projectRouter.post("/", async (req:express.Request, res:express.Response) => {
+
+    const {proj,em1, em2, em3} = req.body;
          
     const projectRepo = req.app.get("appDataSource").getRepository(Project);
 
     let emp1 = new Employee();
-    emp1.name = "vishal";
+    emp1.name = em1;
 
     let emp2 = new Employee();
-    emp2.name = "sharma";
+    emp2.name = em2;
 
     let emp3 = new Employee();
-    emp3.name = "kumar";
+    emp3.name = em3;
 
     let project = new Project();
-    project.name = "project3";
+    project.name = proj;
     project.employee = [emp1, emp2, emp3];
 
     
 
 
     const employees = await projectRepo.save(project);
-    res.json(employees)
+    res.send("Project has been created successfully")
 
 
 

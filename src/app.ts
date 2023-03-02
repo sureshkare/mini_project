@@ -4,13 +4,14 @@ import { DataSource } from "typeorm";
 import { AppDataSource } from "./DataSource";
 import  empRouter  from './routers/empRouter';
 import projectRouter from "./routers/projectRouter";
+import locationRouter from "./routers/LocationRouter";
 
 
 
 const app = express();
 
 app.use(express.json());
-const port = 3005;
+const port = 3006;
 
 app.get("/", (req, res) => {
   res.send(`Hello from express`);
@@ -41,6 +42,7 @@ const connect=async (AppDataSource:DataSource) => {
 
   app.use("/employee",empRouter);
   app.use("/project", projectRouter);
+  app.use("/location", locationRouter);
 
 
 
